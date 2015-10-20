@@ -18,6 +18,7 @@
 		58D769B71BD4DA3100FEB47B /* AutoLayoutViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58D769AD1BD4DA3100FEB47B /* AutoLayoutViewController.m */; settings = {ASSET_TAGS = (); }; };
 		58D769B81BD4DA3100FEB47B /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 58D769AF1BD4DA3100FEB47B /* ViewController.m */; settings = {ASSET_TAGS = (); }; };
 		58D769B91BD4DA3100FEB47B /* AutoLayoutViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 58D769B21BD4DA3100FEB47B /* AutoLayoutViewModel.m */; settings = {ASSET_TAGS = (); }; };
+		58D769BC1BD6292200FEB47B /* ImageContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 58D769BB1BD6292200FEB47B /* ImageContainerView.m */; settings = {ASSET_TAGS = (); }; };
 		F33B5D4F435E9C52DD6F6F38 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F8C4C6C3A3B9AD87971691C1 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,8 @@
 		58D769AF1BD4DA3100FEB47B /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		58D769B11BD4DA3100FEB47B /* AutoLayoutViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AutoLayoutViewModel.h; sourceTree = "<group>"; };
 		58D769B21BD4DA3100FEB47B /* AutoLayoutViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AutoLayoutViewModel.m; sourceTree = "<group>"; };
+		58D769BA1BD6292200FEB47B /* ImageContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageContainerView.h; sourceTree = "<group>"; };
+		58D769BB1BD6292200FEB47B /* ImageContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageContainerView.m; sourceTree = "<group>"; };
 		5DF64BDCC43F0083E4F225D4 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		F8C4C6C3A3B9AD87971691C1 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -145,6 +148,8 @@
 			children = (
 				58D769AA1BD4DA3100FEB47B /* AutoLayoutTableViewCell.h */,
 				58D769AB1BD4DA3100FEB47B /* AutoLayoutTableViewCell.m */,
+				58D769BA1BD6292200FEB47B /* ImageContainerView.h */,
+				58D769BB1BD6292200FEB47B /* ImageContainerView.m */,
 				58D769AC1BD4DA3100FEB47B /* AutoLayoutViewController.h */,
 				58D769AD1BD4DA3100FEB47B /* AutoLayoutViewController.m */,
 				58D769AE1BD4DA3100FEB47B /* ViewController.h */,
@@ -299,6 +304,7 @@
 				58D769B71BD4DA3100FEB47B /* AutoLayoutViewController.m in Sources */,
 				58D769B61BD4DA3100FEB47B /* AutoLayoutTableViewCell.m in Sources */,
 				58D769B31BD4DA3100FEB47B /* UIViewController+BackButton.m in Sources */,
+				58D769BC1BD6292200FEB47B /* ImageContainerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
