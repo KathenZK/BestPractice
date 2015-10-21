@@ -22,5 +22,6 @@
 
 @property (nonatomic, weak) id<ImageContainerViewDelegate> delegate;
 @property (nonatomic, strong) NSArray *imagesUrl;
+@property (nonatomic, assign, readonly) CGFloat height;
 
 @end

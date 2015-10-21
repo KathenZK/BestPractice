@@ -8,6 +8,7 @@
 
 #import "ImageContainerView.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "Constants.h"
 
 /**
  *  ImageContainerView 上可显示图片的最大个数
@@ -23,9 +24,9 @@ const NSInteger ImageContainerViewNumberOfImagesForRow = 3;
 
 const CGFloat ImageContainerViewImagesSpace = 8;
 
-#define ScreenWidth [UIScreen mainScreen].bounds.size.width
+@interface ImageContainerView ()
 
-#define ScreenHeight [UIScreen mainScreen].bounds.size.height
+@end
 
 @implementation ImageContainerView
 
@@ -35,7 +36,7 @@ const CGFloat ImageContainerViewImagesSpace = 8;
  *  @param imagesUrl 所有图片的 URL
  */
 -(void)setImagesUrl:(NSArray *)imagesUrl {
-    NSInteger numberOfImages = imagesUrl.count;
+     NSInteger numberOfImages = imagesUrl.count;
     if (numberOfImages > ImageContainerViewMaxNumberOfImages) {
         NSMutableArray *temImagesUrl = [NSMutableArray  arrayWithCapacity:ImageContainerViewMaxNumberOfImages];
         for (NSInteger i = 0; i < ImageContainerViewMaxNumberOfImages; i++) {
@@ -65,10 +66,19 @@ const CGFloat ImageContainerViewImagesSpace = 8;
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapImageView:)];
         [imageView addGestureRecognizer:tapGesture];
         [imageView sd_setImageWithURL:self.imagesUrl[i] placeholderImage:[UIImage imageNamed:@"diary_place"]];
-        imageView.frame = CGRectMake(i * imageViewSize, i * imageViewSize, imageViewSize, imageViewSize);
-#warning todo
         [self addSubview:imageView];
+        
+        imageView.frame = CGRectMake(i * imageViewSize, i * imageViewSize, imageViewSize, imageViewSize);
+        
     }
+}
+
+/**
+ *  返回 imageContainerView 的高
+ */
+- (CGFloat)height {
+    UIImageView *lastImageView = self.subviews.lastObject;
+    return CGRectGetMaxY(lastImageView.frame);
 }
 
 /**
