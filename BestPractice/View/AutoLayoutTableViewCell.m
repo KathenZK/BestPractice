@@ -9,27 +9,22 @@
 #import "AutoLayoutTableViewCell.h"
 #import <Masonry.h>
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "ImageContainerView.h"
+#import "Constants.h"
+
+const NSInteger AutoLayoutTableViewCellViewSpace = 8;
 
 @interface AutoLayoutTableViewCell ()
 
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *stageNoteNameLabel;
 @property (nonatomic, strong) UIImageView *canVisitImageView;
-@property (nonatomic, strong) NSArray *pictureList;
+@property (nonatomic, strong) ImageContainerView *imageContainerView;
 @property (nonatomic, strong) UILabel *introductionLabel;
 
 @end
 
 @implementation AutoLayoutTableViewCell
-
-+ (instancetype)autoLayoutTableViewCellWithTableView:(UITableView *)tableView {
-    static NSString *cellId = @"AutoLayoutTableViewCell";
-    AutoLayoutTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    if (!cell) {
-        cell = [[AutoLayoutTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellId];
-    }
-    return cell;
-}
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -49,7 +44,7 @@
     self.stageNoteNameLabel.textAlignment = NSTextAlignmentCenter;
     self.stageNoteNameLabel.layer.cornerRadius = 3;
     self.stageNoteNameLabel.layer.borderWidth = 0.5;
-    self.stageNoteNameLabel.layer.borderColor = [UIColor grayColor].CGColor;
+    self.stageNoteNameLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
     [self.contentView addSubview:self.stageNoteNameLabel];
     
     self.canVisitImageView = [[UIImageView alloc] init];
@@ -57,27 +52,31 @@
     self.canVisitImageView.image = image;
     [self.contentView addSubview:self.canVisitImageView];
     
+    self.imageContainerView = [[ImageContainerView alloc] init];
+    [self.contentView addSubview:self.imageContainerView];
+    
+    self.introductionLabel = [[UILabel alloc] init];
+    self.introductionLabel.font = [UIFont systemFontOfSize:14];
+    self.introductionLabel.textColor = [UIColor lightGrayColor];
+    self.introductionLabel.numberOfLines = 0;
+    [self.contentView addSubview:self.introductionLabel];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.left.equalTo(@8);
-        make.right.equalTo(self.stageNoteNameLabel.mas_left).offset(-8);
-        make.height.equalTo(@14);
+        make.top.left.mas_equalTo(AutoLayoutTableViewCellViewSpace);
+        make.right.equalTo(self.stageNoteNameLabel.mas_left).offset(-AutoLayoutTableViewCellViewSpace);
+        make.height.mas_equalTo(14);
     }];
     
     [self.stageNoteNameLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.right.equalTo(self.canVisitImageView.mas_left).offset(-8);
+        make.right.equalTo(self.canVisitImageView.mas_left).offset(-AutoLayoutTableViewCellViewSpace);
         make.top.equalTo(self.titleLabel);
-        make.height.equalTo(@12);
-        make.width.equalTo(@44);
+        make.size.mas_equalTo(CGSizeMake(44, 12));
     }];
     
     [self.canVisitImageView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(0);
-        make.right.equalTo(@-8);
-        NSNumber *width = [NSNumber numberWithFloat:image.size.width];
-        NSNumber *height = [NSNumber numberWithFloat:image.size.height];
-        make.width.equalTo(width);
-        make.height.equalTo(height);
+        make.right.mas_equalTo(-AutoLayoutTableViewCellViewSpace);
+        make.size.mas_equalTo(image.size);
     }];
     
 }
@@ -93,5 +92,34 @@
     } else {
         self.canVisitImageView.hidden = YES;
     }
+    
+    self.imageContainerView.imagesUrl = self.model.pictureList;
+    NSNumber *width = [NSNumber numberWithFloat:ScreenWidth - AutoLayoutTableViewCellViewSpace * 2];
+    NSNumber *imageContainerViewHeight = [NSNumber numberWithFloat:self.imageContainerView.height];
+    [self.imageContainerView mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.titleLabel);
+        make.top.equalTo(self.titleLabel.mas_bottom).offset(AutoLayoutTableViewCellViewSpace);
+        make.width.equalTo(width);
+        make.height.equalTo(imageContainerViewHeight);
+    }];
+    
+    self.introductionLabel.text = model.introduction;
+    NSDictionary *attributes = @{NSFontAttributeName: self.introductionLabel.font};
+    CGSize labelSize = [model.introduction boundingRectWithSize:CGSizeMake(ScreenWidth - AutoLayoutTableViewCellViewSpace * 2, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
+    [self.introductionLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(self.imageContainerView);
+        make.top.equalTo(self.imageContainerView.mas_bottom).offset(AutoLayoutTableViewCellViewSpace);
+        make.size.mas_equalTo(labelSize);
+    }];
 }
+
+//- (CGSize)sizeThatFits:(CGSize)size {
+//    CGFloat totalHeight = 0;
+//    totalHeight += [self.titleLabel sizeThatFits:size].height;
+//    totalHeight += [self.imageContainerView sizeThatFits:size].height;
+//    totalHeight += [self.introductionLabel sizeThatFits:size].height;
+//    totalHeight += 40; // margins
+//    return CGSizeMake(size.width, totalHeight);
+//}
+
 @end

@@ -46,7 +46,7 @@ DEPENDENCIES:
   - MJRefresh
   - MWPhotoBrowser
   - SDWebImage
-  - UITableView+FDTemplateLayoutCell
+  - UITableView+FDTemplateLayoutCell (~> 1.3)
 
 SPEC CHECKSUMS:
   AFNetworking: 8e4e60500beb8bec644cf575beee72990a76d399

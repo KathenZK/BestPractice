@@ -13,6 +13,4 @@
 
 @property (nonatomic, strong) AutoLayoutModel *model;
 
-+ (instancetype)autoLayoutTableViewCellWithTableView:(UITableView *)tableView;
-
 @end

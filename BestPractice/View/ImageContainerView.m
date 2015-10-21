@@ -10,31 +10,33 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "Constants.h"
 
-/**
- *  ImageContainerView 上可显示图片的最大个数
- */
 const NSInteger ImageContainerViewMaxNumberOfImages = 9;
 
-/**
- *  ImageContainerView 上创建的 UIImageView 的 tag 的基数
- */
 const NSInteger ImageContainerViewBaseTag = 100;
 
 const NSInteger ImageContainerViewNumberOfImagesForRow = 3;
 
 const CGFloat ImageContainerViewImagesSpace = 8;
 
-@interface ImageContainerView ()
-
-@end
-
 @implementation ImageContainerView
 
-/**
- *  ImagesUrl 的 setter 方法
- *
- *  @param imagesUrl 所有图片的 URL
- */
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        for (NSUInteger i = 0; i < ImageContainerViewMaxNumberOfImages; i++) {
+            UIImageView *imageView = [[UIImageView alloc] init];
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
+            imageView.clipsToBounds = YES;
+            imageView.tag = ImageContainerViewBaseTag + 1;
+            imageView.userInteractionEnabled = YES;
+            UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapImageView:)];
+            [imageView addGestureRecognizer:tapGesture];
+            [self addSubview:imageView];
+        }
+    }
+    return self;
+}
+
 -(void)setImagesUrl:(NSArray *)imagesUrl {
      NSInteger numberOfImages = imagesUrl.count;
     if (numberOfImages > ImageContainerViewMaxNumberOfImages) {
@@ -48,44 +50,29 @@ const CGFloat ImageContainerViewImagesSpace = 8;
         _imagesUrl = imagesUrl;
     }
     
-    [self setupViewWithImagesCount:numberOfImages];
-}
-
-/**
- *  根据图片个数创建 UIImageView
- *
- *  @param count 图片个数
- */
-- (void)setupViewWithImagesCount:(NSInteger)count {
     CGFloat imageViewSize = (ScreenWidth - (ImageContainerViewNumberOfImagesForRow + 1) * ImageContainerViewImagesSpace) / ImageContainerViewNumberOfImagesForRow;
-    for (NSUInteger i = 0; i < count; i++) {
-        UIImageView *imageView = [[UIImageView alloc] init];
-        imageView.contentMode = UIViewContentModeScaleAspectFit;
-        imageView.tag = ImageContainerViewBaseTag + 1;
-        imageView.userInteractionEnabled = YES;
-        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapImageView:)];
-        [imageView addGestureRecognizer:tapGesture];
-        [imageView sd_setImageWithURL:self.imagesUrl[i] placeholderImage:[UIImage imageNamed:@"diary_place"]];
-        [self addSubview:imageView];
-        
-        imageView.frame = CGRectMake(i * imageViewSize, i * imageViewSize, imageViewSize, imageViewSize);
-        
+    for (NSInteger i = 0; i < numberOfImages; i++) {
+        UIImageView *imageView = self.subviews[i];
+        if (i > numberOfImages) {
+            imageView.hidden = YES;
+        } else {
+            imageView.hidden = NO;
+            [imageView sd_setImageWithURL:self.imagesUrl[i] placeholderImage:[UIImage imageNamed:@"diary_place"]];
+            if (numberOfImages == 1) {
+                imageView.frame = CGRectMake(0, 0, imageViewSize - ImageContainerViewImagesSpace, imageViewSize - ImageContainerViewImagesSpace);
+            } else {
+                NSInteger row = numberOfImages == 4 ? 2: 3;
+                imageView.frame = CGRectMake((i%row) * imageViewSize, (i/row) * imageViewSize, imageViewSize - ImageContainerViewImagesSpace, imageViewSize - ImageContainerViewImagesSpace);
+            }
+        }
     }
 }
 
-/**
- *  返回 imageContainerView 的高
- */
 - (CGFloat)height {
     UIImageView *lastImageView = self.subviews.lastObject;
     return CGRectGetMaxY(lastImageView.frame);
 }
 
-/**
- *  点击 UIImageView 时的响应方法
- *
- *  @param tapGesture 添加到 UIImageView 手势
- */
 - (void)singleTapImageView:(UITapGestureRecognizer *)tapGesture {
     if ([self.delegate respondsToSelector:@selector(imageContainerView:tappedImageIndex:)]) {
         [self.delegate imageContainerView:self tappedImageIndex:tapGesture.view.tag - ImageContainerViewBaseTag];

@@ -41,7 +41,10 @@
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.fd_debugLogEnabled = YES;
+    self.tableView.rowHeight = 450;
     [self.view addSubview:self.tableView];
+    
+    [self.tableView registerClass:[AutoLayoutTableViewCell class] forCellReuseIdentifier:NSStringFromClass([AutoLayoutTableViewCell class])];
     
     [self.tableView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.top.equalTo(@64);
@@ -76,16 +79,19 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    AutoLayoutTableViewCell *cell = [AutoLayoutTableViewCell autoLayoutTableViewCellWithTableView:tableView];
+    AutoLayoutTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AutoLayoutTableViewCell class])];
+    if (!cell) {
+        cell = [[AutoLayoutTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([AutoLayoutTableViewCell class])];
+    }
     cell.model = self.viewModel.modelsArr[indexPath.row];
+//    cell.fd_enforceFrameLayout = YES;
     return cell;
 }
 
 //- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-//    return [tableView fd_heightForCellWithIdentifier:@"AutoLayoutTableViewCell" cacheByIndexPath:indexPath configuration:^(AutoLayoutTableViewCell *cell) {
+//    return [tableView fd_heightForCellWithIdentifier:NSStringFromClass([AutoLayoutTableViewCell class]) cacheByIndexPath:indexPath configuration:^(AutoLayoutTableViewCell *cell) {
 //        cell.model = self.viewModel.modelsArr[indexPath.row];
 //    }];
 //}
-
 
 @end
