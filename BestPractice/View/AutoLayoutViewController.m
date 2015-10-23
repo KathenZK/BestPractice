@@ -14,7 +14,7 @@
 #import "AutoLayoutTableViewCell.h"
 #import <UITableView+FDTemplateLayoutCell/UITableView+FDTemplateLayoutCell.h>
 
-@interface AutoLayoutViewController () <UITableViewDelegate, UITableViewDataSource, AutoLayoutViewModelDelegate>
+@interface AutoLayoutViewController () <UITableViewDelegate, UITableViewDataSource, AutoLayoutViewModelDelegate, ImageContainerViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) AutoLayoutViewModel *viewModel;
@@ -79,12 +79,13 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    AutoLayoutTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AutoLayoutTableViewCell class])];
+    AutoLayoutTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([AutoLayoutTableViewCell class]) forIndexPath:indexPath];
     if (!cell) {
         cell = [[AutoLayoutTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NSStringFromClass([AutoLayoutTableViewCell class])];
     }
     cell.model = self.viewModel.modelsArr[indexPath.row];
-//    cell.fd_enforceFrameLayout = YES;
+    cell.imageContainerView.delegate = self;
+//    cell.fd_enforceFrameLayout = NO;
     return cell;
 }
 
@@ -94,4 +95,8 @@
 //    }];
 //}
 
+#pragma mark - ImageContainerViewDelegate
+- (void)imageContainerView:(ImageContainerView *)imageContainerView tappedImageIndex:(NSInteger)index {
+    
+}
 @end

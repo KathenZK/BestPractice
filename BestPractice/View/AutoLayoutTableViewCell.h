@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "AutoLayoutModel.h"
+#import "ImageContainerView.h"
 
 @interface AutoLayoutTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) AutoLayoutModel *model;
+@property (nonatomic, strong) ImageContainerView *imageContainerView;
 
 @end

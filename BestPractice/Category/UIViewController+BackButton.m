@@ -37,7 +37,7 @@
 - (void)swizzled_viewWillAppear:(BOOL)animated {
     [self swizzled_viewWillAppear:animated];
     
-    if (![self isKindOfClass:NSClassFromString(@"ViewController")]) {
+    if (![self isMemberOfClass:NSClassFromString(@"ViewController")]) {
         UIImage *image = [UIImage imageNamed:@"goBack_blue.png"];
         UIButton *leftButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
         [leftButton setImage:image forState:UIControlStateNormal];

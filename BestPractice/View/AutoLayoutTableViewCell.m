@@ -9,7 +9,6 @@
 #import "AutoLayoutTableViewCell.h"
 #import <Masonry.h>
 #import <SDWebImage/UIImageView+WebCache.h>
-#import "ImageContainerView.h"
 #import "Constants.h"
 
 const NSInteger AutoLayoutTableViewCellViewSpace = 8;
@@ -19,7 +18,6 @@ const NSInteger AutoLayoutTableViewCellViewSpace = 8;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *stageNoteNameLabel;
 @property (nonatomic, strong) UIImageView *canVisitImageView;
-@property (nonatomic, strong) ImageContainerView *imageContainerView;
 @property (nonatomic, strong) UILabel *introductionLabel;
 
 @end
@@ -58,7 +56,7 @@ const NSInteger AutoLayoutTableViewCellViewSpace = 8;
     self.introductionLabel = [[UILabel alloc] init];
     self.introductionLabel.font = [UIFont systemFontOfSize:14];
     self.introductionLabel.textColor = [UIColor lightGrayColor];
-    self.introductionLabel.numberOfLines = 0;
+    self.introductionLabel.numberOfLines = 3;
     [self.contentView addSubview:self.introductionLabel];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -106,20 +104,15 @@ const NSInteger AutoLayoutTableViewCellViewSpace = 8;
     self.introductionLabel.text = model.introduction;
     NSDictionary *attributes = @{NSFontAttributeName: self.introductionLabel.font};
     CGSize labelSize = [model.introduction boundingRectWithSize:CGSizeMake(ScreenWidth - AutoLayoutTableViewCellViewSpace * 2, 1000) options:NSStringDrawingUsesLineFragmentOrigin attributes:attributes context:nil].size;
+    
     [self.introductionLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.imageContainerView);
         make.top.equalTo(self.imageContainerView.mas_bottom).offset(AutoLayoutTableViewCellViewSpace);
-        make.size.mas_equalTo(labelSize);
+        make.right.mas_equalTo(-AutoLayoutTableViewCellViewSpace);
+        make.height.mas_equalTo(labelSize.height);
     }];
+    
+    [self updateConstraintsIfNeeded];
 }
-
-//- (CGSize)sizeThatFits:(CGSize)size {
-//    CGFloat totalHeight = 0;
-//    totalHeight += [self.titleLabel sizeThatFits:size].height;
-//    totalHeight += [self.imageContainerView sizeThatFits:size].height;
-//    totalHeight += [self.introductionLabel sizeThatFits:size].height;
-//    totalHeight += 40; // margins
-//    return CGSizeMake(size.width, totalHeight);
-//}
 
 @end

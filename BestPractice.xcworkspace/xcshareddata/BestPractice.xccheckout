@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>1D4D6BB7-7190-40D9-9793-B33B77FAE324</string>
+	<key>IDESourceControlProjectName</key>
+	<string>BestPractice</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>4D6118B57D60C382BEFCC0152AD68313E6F5A540</key>
+		<string>https://github.com/KathenZK/BestPractice.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>BestPractice.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>4D6118B57D60C382BEFCC0152AD68313E6F5A540</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/KathenZK/BestPractice.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>4D6118B57D60C382BEFCC0152AD68313E6F5A540</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>4D6118B57D60C382BEFCC0152AD68313E6F5A540</string>
+			<key>IDESourceControlWCCName</key>
+			<string>BestPractice</string>
+		</dict>
+	</array>
+</dict>
+</plist>
